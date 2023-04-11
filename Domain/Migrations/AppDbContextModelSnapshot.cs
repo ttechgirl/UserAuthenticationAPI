@@ -52,14 +52,14 @@ namespace Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c67f7415-00af-4ede-a2d2-1c646279c8e0"),
+                            Id = new Guid("69d545c8-b65e-4fff-82ac-bce73ac289a3"),
                             ConcurrencyStamp = "1",
                             Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = new Guid("433d1733-8eb6-4111-b471-228706495b83"),
+                            Id = new Guid("df718532-fd67-45b0-8c70-0659331f1fab"),
                             ConcurrencyStamp = "2",
                             Name = "Admin",
                             NormalizedName = "Admin"
@@ -110,6 +110,9 @@ namespace Domain.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Job")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("LastLoginDate")
                         .HasColumnType("datetime2");
 
@@ -123,6 +126,9 @@ namespace Domain.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifiedBy")
@@ -158,12 +164,6 @@ namespace Domain.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("UserType")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("UserTypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -179,48 +179,46 @@ namespace Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8dc83d39-dbbf-44f7-9919-e10b52cf17a5"),
+                            Id = new Guid("6426a7ff-d7df-45d1-a890-5244dd0c61c8"),
                             AccessFailedCount = 0,
                             Activated = false,
-                            ConcurrencyStamp = "29f974e2-652c-4552-95fb-e9bc916b1426",
-                            CreatedOn = new DateTime(2023, 4, 4, 14, 31, 35, 17, DateTimeKind.Local).AddTicks(4752),
-                            DeletedOn = new DateTime(2023, 4, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            ConcurrencyStamp = "bc92ee0d-9123-4307-aaf9-1ed1685fea0c",
+                            CreatedOn = new DateTime(2023, 4, 11, 1, 31, 57, 474, DateTimeKind.Local).AddTicks(959),
+                            DeletedOn = new DateTime(2023, 4, 11, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "abiodunayisat2@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Aysat",
                             Gender = 0,
                             IsDeleted = false,
-                            LastLoginDate = new DateTime(2023, 4, 4, 14, 31, 35, 17, DateTimeKind.Local).AddTicks(4737),
+                            LastLoginDate = new DateTime(2023, 4, 11, 1, 31, 57, 474, DateTimeKind.Local).AddTicks(945),
                             LastName = "Mustapha",
                             LockoutEnabled = false,
                             MiddleName = "Abiodun",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE8Q+5ZEkTXs+hGGFNWsWOzqF7gyWpuGdiayb3EWbWbrWArDcIIjMJ4CwWcmGd738w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHKqahAwFrKO//cNE9DeQsF6f7YT2NJaDuAfPaS2EbWQPMEsEpCZXYj24YCv5flcWg==",
                             PhoneNumber = "08084491078",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserType = 0
+                            TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = new Guid("3b92ac89-7bf4-4ce2-85b1-6214cc43e127"),
+                            Id = new Guid("84f56275-75d6-471b-a0fe-b5d8eb5a3322"),
                             AccessFailedCount = 0,
                             Activated = false,
-                            ConcurrencyStamp = "48b36d58-3b16-4adc-9bf4-602a73183bb2",
-                            CreatedOn = new DateTime(2023, 4, 4, 14, 31, 35, 29, DateTimeKind.Local).AddTicks(3632),
-                            DeletedOn = new DateTime(2023, 4, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            ConcurrencyStamp = "7e425e38-6e30-4026-9669-66c56fc078ec",
+                            CreatedOn = new DateTime(2023, 4, 11, 1, 31, 57, 487, DateTimeKind.Local).AddTicks(824),
+                            DeletedOn = new DateTime(2023, 4, 11, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "akeem234@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Akeem",
                             Gender = 0,
                             IsDeleted = false,
-                            LastLoginDate = new DateTime(2023, 4, 4, 14, 31, 35, 29, DateTimeKind.Local).AddTicks(3617),
+                            LastLoginDate = new DateTime(2023, 4, 11, 1, 31, 57, 487, DateTimeKind.Local).AddTicks(808),
                             LastName = "Mustapha",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEJbn0ere/G2GjOd5GnmXYPIEzVmjQcFAR0RyeO7n7vM4pLtJxvtVCL07o9gKwRzIZg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO4UJgmFgFZuNlvJAvR5d5tDtW+JAtANBZm/CkQyaAvqU9+t+yYOA/2V3Dq0U8nlJg==",
                             PhoneNumber = "08055423378",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserType = 0
+                            TwoFactorEnabled = false
                         });
                 });
 

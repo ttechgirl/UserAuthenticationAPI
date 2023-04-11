@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Services.Interface
 {
-    public interface IUserRepository
+    public interface IUserAuthRepository
     {
         Task<ResponseViewModel> SignUp(SignUpViewModel model);
         Task<ResponseViewModel> Login(LoginViewModel model);
         Task<ResponseViewModel> ForgetPassword(ForgetPasswordViewModel model);
         Task<ResponseViewModel> ResetPassword(ResetPasswordViewModel model);
-        Task<ResponseViewModel> ChangePassword(ResetPasswordViewModel model);
-        Task<ResponseViewModel> DeleteProfile(UserProfileViewModel model);
+        Task<ResponseViewModel> ChangePassword(ChangePasswordViewModel model);
+        Task<ResponseViewModel> DeleteProfile(UserViewModel model);
 
 
 

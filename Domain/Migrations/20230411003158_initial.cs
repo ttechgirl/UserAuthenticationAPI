@@ -31,9 +31,9 @@ namespace Domain.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MobileNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    UserType = table.Column<int>(type: "int", nullable: false),
-                    UserTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Job = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastLoginDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Activated = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -174,17 +174,17 @@ namespace Domain.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("433d1733-8eb6-4111-b471-228706495b83"), "2", "Admin", "Admin" },
-                    { new Guid("c67f7415-00af-4ede-a2d2-1c646279c8e0"), "1", "User", "User" }
+                    { new Guid("69d545c8-b65e-4fff-82ac-bce73ac289a3"), "1", "User", "User" },
+                    { new Guid("df718532-fd67-45b0-8c70-0659331f1fab"), "2", "Admin", "Admin" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Activated", "ConcurrencyStamp", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "Email", "EmailConfirmed", "FirstName", "Gender", "IsDeleted", "LastLoginDate", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "ModifiedBy", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "UserType", "UserTypeId" },
+                columns: new[] { "Id", "AccessFailedCount", "Activated", "ConcurrencyStamp", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "Email", "EmailConfirmed", "FirstName", "Gender", "IsDeleted", "Job", "LastLoginDate", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "MobileNumber", "ModifiedBy", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("3b92ac89-7bf4-4ce2-85b1-6214cc43e127"), 0, false, "48b36d58-3b16-4adc-9bf4-602a73183bb2", null, new DateTime(2023, 4, 4, 14, 31, 35, 29, DateTimeKind.Local).AddTicks(3632), null, new DateTime(2023, 4, 4, 0, 0, 0, 0, DateTimeKind.Local), "akeem234@gmail.com", false, "Akeem", 0, false, new DateTime(2023, 4, 4, 14, 31, 35, 29, DateTimeKind.Local).AddTicks(3617), "Mustapha", false, null, null, null, null, null, null, "AQAAAAEAACcQAAAAEJbn0ere/G2GjOd5GnmXYPIEzVmjQcFAR0RyeO7n7vM4pLtJxvtVCL07o9gKwRzIZg==", "08055423378", false, null, false, null, 0, null },
-                    { new Guid("8dc83d39-dbbf-44f7-9919-e10b52cf17a5"), 0, false, "29f974e2-652c-4552-95fb-e9bc916b1426", null, new DateTime(2023, 4, 4, 14, 31, 35, 17, DateTimeKind.Local).AddTicks(4752), null, new DateTime(2023, 4, 4, 0, 0, 0, 0, DateTimeKind.Local), "abiodunayisat2@gmail.com", false, "Aysat", 0, false, new DateTime(2023, 4, 4, 14, 31, 35, 17, DateTimeKind.Local).AddTicks(4737), "Mustapha", false, null, "Abiodun", null, null, null, null, "AQAAAAEAACcQAAAAEE8Q+5ZEkTXs+hGGFNWsWOzqF7gyWpuGdiayb3EWbWbrWArDcIIjMJ4CwWcmGd738w==", "08084491078", false, null, false, null, 0, null }
+                    { new Guid("6426a7ff-d7df-45d1-a890-5244dd0c61c8"), 0, false, "bc92ee0d-9123-4307-aaf9-1ed1685fea0c", null, new DateTime(2023, 4, 11, 1, 31, 57, 474, DateTimeKind.Local).AddTicks(959), null, new DateTime(2023, 4, 11, 0, 0, 0, 0, DateTimeKind.Local), "abiodunayisat2@gmail.com", false, "Aysat", 0, false, null, new DateTime(2023, 4, 11, 1, 31, 57, 474, DateTimeKind.Local).AddTicks(945), "Mustapha", false, null, "Abiodun", null, null, null, null, null, "AQAAAAEAACcQAAAAEHKqahAwFrKO//cNE9DeQsF6f7YT2NJaDuAfPaS2EbWQPMEsEpCZXYj24YCv5flcWg==", "08084491078", false, null, false, null },
+                    { new Guid("84f56275-75d6-471b-a0fe-b5d8eb5a3322"), 0, false, "7e425e38-6e30-4026-9669-66c56fc078ec", null, new DateTime(2023, 4, 11, 1, 31, 57, 487, DateTimeKind.Local).AddTicks(824), null, new DateTime(2023, 4, 11, 0, 0, 0, 0, DateTimeKind.Local), "akeem234@gmail.com", false, "Akeem", 0, false, null, new DateTime(2023, 4, 11, 1, 31, 57, 487, DateTimeKind.Local).AddTicks(808), "Mustapha", false, null, null, null, null, null, null, null, "AQAAAAEAACcQAAAAEO4UJgmFgFZuNlvJAvR5d5tDtW+JAtANBZm/CkQyaAvqU9+t+yYOA/2V3Dq0U8nlJg==", "08055423378", false, null, false, null }
                 });
 
             migrationBuilder.CreateIndex(

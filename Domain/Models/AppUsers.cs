@@ -13,9 +13,9 @@ namespace Domain.Models
         public string? LastName { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
+        public string? MobileNumber { get; set; }
         public int Gender { get; set; }
-        public int UserType { get; set; }
-        public Guid? UserTypeId { get; set; }
+        public string? Job { get; set; }
         public DateTime? LastLoginDate { get; set; } = DateTime.Now;
         public bool Activated { get; set; }
         public bool IsDeleted { get; set; } = false;
@@ -25,7 +25,6 @@ namespace Domain.Models
         public string? ModifiedBy { get; set; }
         public string? DeletedBy { get; set; }
         public DateTime? DeletedOn { get; set; } = DateTime.Now.Date;
-
 
     }
 }

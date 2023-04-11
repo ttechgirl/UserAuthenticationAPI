@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.ViewModel
+namespace DataAccess.Enums
 {
-    public class UserProfileViewModel
+    public enum Gender
     {
+        UNKNOWN,
+        MALE,
+        FEMALE
     }
 }

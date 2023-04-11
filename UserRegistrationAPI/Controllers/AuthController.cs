@@ -17,34 +17,39 @@ namespace UserRegistrationAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-
         public UserManager<AppUsers> userManager;
         public RoleManager<AppRoles> roleManager;
-        private readonly ILogger<AuthController> logger;
-        //makes it easy to access appsettings
         public readonly IConfiguration configuration;
-        private readonly IUserRepository userRepository;
+        private readonly IUserAuthRepository userRepository;
 
-
-        public AuthController(IUserRepository userRepository,UserManager<AppUsers> userManager, RoleManager<AppRoles> roleManager, ILogger<AuthController> logger, IConfiguration configuration)
+        public AuthController(IUserAuthRepository userRepository,IConfiguration configuration,RoleManager<AppRoles> roleManager, UserManager<AppUsers> userManager)
         {
+            this.userRepository = userRepository;
+            this.configuration = configuration;
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.logger = logger;
-            this.configuration = configuration;
-            this.userRepository = userRepository;
         }
 
         [HttpPost]
         [Route("signup")]
         public async Task<IActionResult> SignUp([FromBody] SignUpViewModel model)
         {
-            var user = await userRepository.SignUp(model);
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                return Ok("User successfully created" );
+                var user = await userRepository.SignUp(model);
+                if (user != null)
+                {
+                    var role = await roleManager.FindByIdAsync(model.RoleId.ToString());
+                    if (role == null)
+                    {
+                        return StatusCode(StatusCodes.Status400BadRequest, new ResponseViewModel { Success = false, Message = "Role does not exist" });
+
+                    }
+                    return Ok(user);
+                }
+                return BadRequest("Kindly input all fields correctly");
             }
-            return BadRequest ("Kindly input all fields correctly");
+            return BadRequest();
            
 
             //if (string.Compare(model.Password, model.ConfirmPassword) != 0)
@@ -83,7 +88,7 @@ namespace UserRegistrationAPI.Controllers
                 var token = new JwtSecurityToken(
                     issuer: configuration["JWT:Issuer"],
                     audience: configuration["JWT.Audience"],
-                    expires: DateTime.Now.AddMinutes(20),
+                    expires: DateTime.Now.AddMinutes(10),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
 
@@ -92,7 +97,6 @@ namespace UserRegistrationAPI.Controllers
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
                     Message = "Login successful"
-
                 });
             }
             return Unauthorized("Username or password incorrect");
@@ -100,20 +104,18 @@ namespace UserRegistrationAPI.Controllers
 
         [HttpPost]
         [Route("reset-password")]
-
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             var user = await userRepository.ResetPassword(model);
             if (user != null)
             {
-
+                return Ok(user);
             }
-            return Unauthorized("User ");
+            return NotFound(user);
         }
 
         [HttpPost]
         [Route("forget-password")]
-
         public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel model)
         {
             var user = await userRepository.ForgetPassword(model);
@@ -121,14 +123,13 @@ namespace UserRegistrationAPI.Controllers
             {
                 return Ok(user);
             }
-            return NotFound("User not found,kindly enter correct email address!");
+            return NotFound(user);
 
         }
 
 
         [HttpPost]
         [Route("change-password")]
-
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             var user = await userRepository.ChangePassword(model);
@@ -136,7 +137,7 @@ namespace UserRegistrationAPI.Controllers
             {
                 return Ok(user);
             }
-            return NotFound("User not found,kindly enter correct email address!");
+            return NotFound(user);
 
         }
     }

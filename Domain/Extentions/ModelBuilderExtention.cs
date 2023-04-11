@@ -42,7 +42,7 @@ namespace Domain.Extentions
             builder.Entity<AppRoles>().HasData(
             new AppRoles
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("69D545C8-B65E-4FFF-82AC-BCE73AC289A3"),
                 Name = "User",
                 NormalizedName = "User",
                 ConcurrencyStamp ="1"
@@ -52,7 +52,7 @@ namespace Domain.Extentions
             builder.Entity<AppRoles>().HasData(
            new AppRoles
            {
-               Id = Guid.NewGuid(),
+               Id = Guid.Parse("DF718532-FD67-45B0-8C70-0659331F1FAB"),
                Name = "Admin",
                NormalizedName = "Admin",
                ConcurrencyStamp = "2"
