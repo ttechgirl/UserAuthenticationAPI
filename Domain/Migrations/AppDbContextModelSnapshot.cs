@@ -110,9 +110,6 @@ namespace Domain.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Job")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("LastLoginDate")
                         .HasColumnType("datetime2");
 
@@ -128,9 +125,6 @@ namespace Domain.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MobileNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -144,6 +138,9 @@ namespace Domain.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Occupation")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -179,43 +176,43 @@ namespace Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6426a7ff-d7df-45d1-a890-5244dd0c61c8"),
+                            Id = new Guid("f2bb1293-fe4e-4f9c-bf1a-abca87d9cff4"),
                             AccessFailedCount = 0,
                             Activated = false,
-                            ConcurrencyStamp = "bc92ee0d-9123-4307-aaf9-1ed1685fea0c",
-                            CreatedOn = new DateTime(2023, 4, 11, 1, 31, 57, 474, DateTimeKind.Local).AddTicks(959),
-                            DeletedOn = new DateTime(2023, 4, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            ConcurrencyStamp = "01b9824e-4e68-4d66-8ad8-4412954d6c48",
+                            CreatedOn = new DateTime(2023, 4, 13, 17, 43, 2, 573, DateTimeKind.Local).AddTicks(5880),
+                            DeletedOn = new DateTime(2023, 4, 13, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "abiodunayisat2@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Aysat",
                             Gender = 0,
                             IsDeleted = false,
-                            LastLoginDate = new DateTime(2023, 4, 11, 1, 31, 57, 474, DateTimeKind.Local).AddTicks(945),
+                            LastLoginDate = new DateTime(2023, 4, 13, 17, 43, 2, 573, DateTimeKind.Local).AddTicks(5867),
                             LastName = "Mustapha",
                             LockoutEnabled = false,
                             MiddleName = "Abiodun",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHKqahAwFrKO//cNE9DeQsF6f7YT2NJaDuAfPaS2EbWQPMEsEpCZXYj24YCv5flcWg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENPaddOc4yijm8VEd7VVYaaPn9MTkJoBNuHO86DtDPQyGpghD/tn6HT7jEgeFFtEzg==",
                             PhoneNumber = "08084491078",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = new Guid("84f56275-75d6-471b-a0fe-b5d8eb5a3322"),
+                            Id = new Guid("2d97fed3-45fb-4642-954c-836b2122e421"),
                             AccessFailedCount = 0,
                             Activated = false,
-                            ConcurrencyStamp = "7e425e38-6e30-4026-9669-66c56fc078ec",
-                            CreatedOn = new DateTime(2023, 4, 11, 1, 31, 57, 487, DateTimeKind.Local).AddTicks(824),
-                            DeletedOn = new DateTime(2023, 4, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            ConcurrencyStamp = "0499f45a-9aab-4ff7-ac39-1e49a95a18b0",
+                            CreatedOn = new DateTime(2023, 4, 13, 17, 43, 2, 585, DateTimeKind.Local).AddTicks(4368),
+                            DeletedOn = new DateTime(2023, 4, 13, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "akeem234@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Akeem",
                             Gender = 0,
                             IsDeleted = false,
-                            LastLoginDate = new DateTime(2023, 4, 11, 1, 31, 57, 487, DateTimeKind.Local).AddTicks(808),
+                            LastLoginDate = new DateTime(2023, 4, 13, 17, 43, 2, 585, DateTimeKind.Local).AddTicks(4350),
                             LastName = "Mustapha",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEO4UJgmFgFZuNlvJAvR5d5tDtW+JAtANBZm/CkQyaAvqU9+t+yYOA/2V3Dq0U8nlJg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBhuEXuRzqdaefcJw054qk3yxRJ2OAMxEjObGD1pZ4o7gsLFLN8tnUuBthTELhvBeQ==",
                             PhoneNumber = "08055423378",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false

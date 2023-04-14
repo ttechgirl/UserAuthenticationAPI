@@ -37,7 +37,7 @@ namespace UserRegistrationAPI.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userRepository.SignUp(model);
-                if (user != null)
+                if (user.Success)
                 {
                     var role = await roleManager.FindByIdAsync(model.RoleId.ToString());
                     if (role == null)
@@ -64,27 +64,15 @@ namespace UserRegistrationAPI.Controllers
         public async Task<IActionResult> Login([FromBody]LoginViewModel model)
         {
 
-            //checking if user email exit and password matches the provided email
-            var user = await userManager.FindByNameAsync(model.Email);
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            //var user = await userManager.FindByNameAsync(model.Email);
+            var user = await userRepository.Login(model);
+            if (user.Success)
             {
-                var userRoles = await userManager.GetRolesAsync(user);
+                //var userRoles = await userManager.GetRolesAsync(user);
 
-                var authClaims = new List<Claim>
-                {
-                };
-
-                new Claim(ClaimTypes.Name, user.Email);
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
-
-
-                foreach (var userRole in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
+                var authClaims = new List<Claim> { };
+               
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
-
-
                 var token = new JwtSecurityToken(
                     issuer: configuration["JWT:Issuer"],
                     audience: configuration["JWT.Audience"],
@@ -96,18 +84,19 @@ namespace UserRegistrationAPI.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
-                    Message = "Login successful"
                 });
             }
-            return Unauthorized("Username or password incorrect");
+            return Unauthorized(user);
         }
 
+        
         [HttpPost]
         [Route("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordViewModel model)
         {
             var user = await userRepository.ResetPassword(model);
-            if (user != null)
+
+            if (user.Success)
             {
                 return Ok(user);
             }
@@ -116,10 +105,10 @@ namespace UserRegistrationAPI.Controllers
 
         [HttpPost]
         [Route("forget-password")]
-        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel model)
+        public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordViewModel model)
         {
             var user = await userRepository.ForgetPassword(model);
-            if(user != null)
+            if(user.Success)
             {
                 return Ok(user);
             }
@@ -130,15 +119,35 @@ namespace UserRegistrationAPI.Controllers
 
         [HttpPost]
         [Route("change-password")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
         {
             var user = await userRepository.ChangePassword(model);
-            if (user != null)
+            if (user.Success)
             {
                 return Ok(user);
             }
             return NotFound(user);
 
         }
+
+        [HttpDelete]
+        [Route("delete-profile")]
+        public async Task<IActionResult> DeleteProfile(Guid Id)
+        {
+            if (Id == Guid.Empty)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new ResponseViewModel { Success = false, Message = "Id cannot be empty!" });
+            }
+            var user = await userRepository.DeleteProfile(Id);
+            if(user.Success )
+            {
+                return Ok(user);
+            }
+            return BadRequest(user);
+        }
+
+
+
+
     }
 }

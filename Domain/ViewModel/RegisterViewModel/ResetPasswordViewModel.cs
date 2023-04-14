@@ -19,6 +19,6 @@ namespace Domain.ViewModel.RegisterViewModel
         [DataType(DataType.Password), Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Password mismatched!")]
         public string? ConfirmPassword { get; set; }
-        public string? token { get; set; }
+        public string? Token { get; set; }
     }
 }

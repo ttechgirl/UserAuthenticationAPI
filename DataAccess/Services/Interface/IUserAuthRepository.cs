@@ -15,7 +15,7 @@ namespace DataAccess.Services.Interface
         Task<ResponseViewModel> ForgetPassword(ForgetPasswordViewModel model);
         Task<ResponseViewModel> ResetPassword(ResetPasswordViewModel model);
         Task<ResponseViewModel> ChangePassword(ChangePasswordViewModel model);
-        Task<ResponseViewModel> DeleteProfile(UserViewModel model);
+        Task<ResponseViewModel> DeleteProfile(Guid Id);
 
 
 

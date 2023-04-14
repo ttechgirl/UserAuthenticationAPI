@@ -41,12 +41,13 @@ namespace DataAccess.Services.Repository
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
                 Email = model.Email,
-                MobileNumber = model.PhoneNumber,
+                PhoneNumber= model.PhoneNumber,
                 CreatedOn = DateTime.Now,
                 SecurityStamp = DateTime.Now.ToString()
             };
 
-            var existUser = dbContext.Set<AppUsers>().FirstOrDefault(x => x.Email == model.Email);
+            //var existUser = dbContext.Set<AppUsers>().FirstOrDefault(x => x.Email == model.Email);
+            var existUser = userManager.Users.FirstOrDefault(x => x.Email == model.Email);
             if (existUser!=null)
             {
                 return new ResponseViewModel() { Success = false, Message = "Email exist ,kindly use a different email" };
@@ -66,19 +67,38 @@ namespace DataAccess.Services.Repository
 
         public async Task<ResponseViewModel> Login(LoginViewModel model)
         {
+            //checking if user email exit and password matches the provided email
 
-            throw new NotImplementedException();
+            var user = await userManager.FindByNameAsync(model.Email);
+            if(user != null&& !user.IsDeleted && await userManager.CheckPasswordAsync(user, model.Password))
+            {
+                var userRoles =await userManager.GetRolesAsync(user);
+                var authClaims = new List<Claim>
+                {
+                };
+
+                new Claim(ClaimTypes.Name, user.Email);
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
+
+
+                foreach (var userRole in userRoles)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                }
+                return new ResponseViewModel() { Success = true, Message = "Login successful" };
+
+            }
+                return new ResponseViewModel() { Success = false, Message = "Username or password incorrect" };
         }
 
         public async Task<ResponseViewModel> ForgetPassword(ForgetPasswordViewModel model)
         {
             var user = await userManager.FindByNameAsync(model.Email);
 
-            if (user != null)
+            if (user != null && !user.IsDeleted)
             {
                 var role = await userManager.GetRolesAsync(user);
                 if (role != null)
-                    await userManager.GeneratePasswordResetTokenAsync(user);
                     return new ResponseViewModel() { Success = true, Message = "Reset password!" };
             }
             return new ResponseViewModel() { Success = false, Message = "User not found,kindly enter correct email address!" };
@@ -88,13 +108,15 @@ namespace DataAccess.Services.Repository
         {
             var user = await userManager.FindByNameAsync(model.Email);
 
-            if (user != null)
+            if (user != null && !user.IsDeleted)
             {
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
                 var role = await userManager.GetRolesAsync(user);
                 if (role != null)
                 {
-                    await userManager.ResetPasswordAsync(user, model.token, model.Password);
-                    return new ResponseViewModel() { Success = true, Message = "Password reset successful" };
+                    await userManager.ResetPasswordAsync(user, model.token=token, model.Password);
+                    return new ResponseViewModel() { Success = true, Message = "Password reset successfully" };
                 }
             }
             return new ResponseViewModel() { Success = false, Message = "User not found,kindly enter correct email address!" };
@@ -104,7 +126,7 @@ namespace DataAccess.Services.Repository
         {
             var user = await userManager.FindByNameAsync(model.Email);
 
-            if(user != null)
+            if(user != null && !user.IsDeleted)
             {
                 await userManager.ChangePasswordAsync(user,model.CurrentPassword,model.NewPassword);
                 return new ResponseViewModel() { Success = true, Message = "Password successfully changed" };
@@ -112,9 +134,23 @@ namespace DataAccess.Services.Repository
             return new ResponseViewModel() { Success = false, Message = "User not found,kindly enter correct email address!" };
         }
 
-        public async Task<ResponseViewModel> DeleteProfile(UserViewModel model)
+        public async Task<ResponseViewModel> DeleteProfile(Guid Id)
         {
-            throw new NotImplementedException();
+            //var existUser = await dbContext.Set<AppUsers>().FindAsync(Id);
+            var existUser = userManager.Users.FirstOrDefault(x => x.Id == Id);
+
+            if (existUser ==null)
+            {
+              return new ResponseViewModel() { Success = false, Message = "User not found!" };
+
+            }
+            existUser.IsDeleted = true;
+            existUser.DeletedBy = existUser.UserName;
+            existUser.DeletedOn = DateTime.UtcNow;
+
+            await userManager.UpdateAsync(existUser);
+            return new ResponseViewModel() { Success = true, Message = "Profile deleted successfully" };
+
         }
     }
 }
