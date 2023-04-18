@@ -171,20 +171,17 @@ namespace Domain.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { new Guid("69d545c8-b65e-4fff-82ac-bce73ac289a3"), "1", "User", "User" },
-                    { new Guid("df718532-fd67-45b0-8c70-0659331f1fab"), "2", "Admin", "Admin" }
-                });
+                values: new object[] { new Guid("69d545c8-b65e-4fff-82ac-bce73ac289a3"), "1", "User", "User" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { new Guid("df718532-fd67-45b0-8c70-0659331f1fab"), "2", "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Activated", "ConcurrencyStamp", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "Email", "EmailConfirmed", "FirstName", "Gender", "IsDeleted", "LastLoginDate", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "ModifiedBy", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "Occupation", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { new Guid("2d97fed3-45fb-4642-954c-836b2122e421"), 0, false, "0499f45a-9aab-4ff7-ac39-1e49a95a18b0", null, new DateTime(2023, 4, 13, 17, 43, 2, 585, DateTimeKind.Local).AddTicks(4368), null, new DateTime(2023, 4, 13, 0, 0, 0, 0, DateTimeKind.Local), "akeem234@gmail.com", false, "Akeem", 0, false, new DateTime(2023, 4, 13, 17, 43, 2, 585, DateTimeKind.Local).AddTicks(4350), "Mustapha", false, null, null, null, null, null, null, null, "AQAAAAEAACcQAAAAEBhuEXuRzqdaefcJw054qk3yxRJ2OAMxEjObGD1pZ4o7gsLFLN8tnUuBthTELhvBeQ==", "08055423378", false, null, false, null },
-                    { new Guid("f2bb1293-fe4e-4f9c-bf1a-abca87d9cff4"), 0, false, "01b9824e-4e68-4d66-8ad8-4412954d6c48", null, new DateTime(2023, 4, 13, 17, 43, 2, 573, DateTimeKind.Local).AddTicks(5880), null, new DateTime(2023, 4, 13, 0, 0, 0, 0, DateTimeKind.Local), "abiodunayisat2@gmail.com", false, "Aysat", 0, false, new DateTime(2023, 4, 13, 17, 43, 2, 573, DateTimeKind.Local).AddTicks(5867), "Mustapha", false, null, "Abiodun", null, null, null, null, null, "AQAAAAEAACcQAAAAENPaddOc4yijm8VEd7VVYaaPn9MTkJoBNuHO86DtDPQyGpghD/tn6HT7jEgeFFtEzg==", "08084491078", false, null, false, null }
-                });
+                values: new object[] { new Guid("5638f5c3-a111-4d17-a2c2-70be1284a07b"), 0, false, "7ee3daea-5714-494d-b12b-b31d90b956dd", null, new DateTime(2023, 4, 18, 15, 35, 18, 537, DateTimeKind.Local).AddTicks(8074), null, new DateTime(2023, 4, 18, 0, 0, 0, 0, DateTimeKind.Local), "akeem234@gmail.com", false, "Akeem", 0, false, new DateTime(2023, 4, 18, 15, 35, 18, 537, DateTimeKind.Local).AddTicks(8058), "Mustapha", false, null, null, null, null, null, null, null, "AQAAAAEAACcQAAAAEOuWOSPP12BI9NVjwAVBpTJ78IzCJdPivpx7A7lpKi3XU0Q2gjKxQBkHSCrSg669Nw==", "08055423378", false, null, false, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

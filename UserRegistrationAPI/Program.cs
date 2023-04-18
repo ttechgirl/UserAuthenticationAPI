@@ -12,29 +12,52 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+//injecting services
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserAuthRepository, UserAuthRepository>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+//builder.Services.AddTransient<IPasswordValidator<AppUsers>, UserAuthRepository>();
 
+
+//add Database
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectingToDB")));
+
+//add email configuration
+var emailConfig=builder.Configuration.GetSection("EmailConfig").Get<EmailConfig>();
+builder.Services.AddSingleton(emailConfig);
+
+
 
 builder.Services.AddIdentity<AppUsers, AppRoles>(opt =>
 {
-    opt.Password.RequireDigit = true;
-    opt.Password.RequireUppercase = true;
-    opt.Password.RequireLowercase = true;
-    opt.Password.RequiredLength = 8;
-    opt.Password.RequiredUniqueChars = 1;
-    opt.SignIn.RequireConfirmedEmail = true;
+    //opt.Password.RequireDigit = true;
+    //opt.Password.RequireUppercase = true;
+    //opt.Password.RequireLowercase = true;
+    //opt.Password.RequiredLength = 8;
+    //opt.Password.RequiredUniqueChars = 1;
+    //opt.SignIn.RequireConfirmedEmail = true;
+    
 })
    .AddEntityFrameworkStores<AppDbContext>()
    .AddDefaultTokenProviders()
    //.AddRoles<IdentityRole>()
    .AddSignInManager<SignInManager<AppUsers>>();
+
+//password validation
+builder.Services.Configure<IdentityOptions>(opt =>
+{
+    opt.SignIn.RequireConfirmedEmail = true;
+    opt.Password.RequireDigit = true;
+    opt.Password.RequireUppercase = true;
+    opt.Password.RequireLowercase = true;
+    opt.Password.RequiredLength = 8;
+    opt.Password.RequiredUniqueChars = 1;
+    opt.User.RequireUniqueEmail = true;
+    // opt.Password.RequireNonAlphanumeric = false;
+});
 
 builder.Services.AddAuthentication(opts =>
 {

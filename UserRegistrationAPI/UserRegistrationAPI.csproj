@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\TutorFinder\TutorFinder.csproj" />
   </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230413164303_initial")]
+    [Migration("20230418143519_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -178,43 +178,21 @@ namespace Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f2bb1293-fe4e-4f9c-bf1a-abca87d9cff4"),
+                            Id = new Guid("5638f5c3-a111-4d17-a2c2-70be1284a07b"),
                             AccessFailedCount = 0,
                             Activated = false,
-                            ConcurrencyStamp = "01b9824e-4e68-4d66-8ad8-4412954d6c48",
-                            CreatedOn = new DateTime(2023, 4, 13, 17, 43, 2, 573, DateTimeKind.Local).AddTicks(5880),
-                            DeletedOn = new DateTime(2023, 4, 13, 0, 0, 0, 0, DateTimeKind.Local),
-                            Email = "abiodunayisat2@gmail.com",
-                            EmailConfirmed = false,
-                            FirstName = "Aysat",
-                            Gender = 0,
-                            IsDeleted = false,
-                            LastLoginDate = new DateTime(2023, 4, 13, 17, 43, 2, 573, DateTimeKind.Local).AddTicks(5867),
-                            LastName = "Mustapha",
-                            LockoutEnabled = false,
-                            MiddleName = "Abiodun",
-                            PasswordHash = "AQAAAAEAACcQAAAAENPaddOc4yijm8VEd7VVYaaPn9MTkJoBNuHO86DtDPQyGpghD/tn6HT7jEgeFFtEzg==",
-                            PhoneNumber = "08084491078",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false
-                        },
-                        new
-                        {
-                            Id = new Guid("2d97fed3-45fb-4642-954c-836b2122e421"),
-                            AccessFailedCount = 0,
-                            Activated = false,
-                            ConcurrencyStamp = "0499f45a-9aab-4ff7-ac39-1e49a95a18b0",
-                            CreatedOn = new DateTime(2023, 4, 13, 17, 43, 2, 585, DateTimeKind.Local).AddTicks(4368),
-                            DeletedOn = new DateTime(2023, 4, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            ConcurrencyStamp = "7ee3daea-5714-494d-b12b-b31d90b956dd",
+                            CreatedOn = new DateTime(2023, 4, 18, 15, 35, 18, 537, DateTimeKind.Local).AddTicks(8074),
+                            DeletedOn = new DateTime(2023, 4, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "akeem234@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Akeem",
                             Gender = 0,
                             IsDeleted = false,
-                            LastLoginDate = new DateTime(2023, 4, 13, 17, 43, 2, 585, DateTimeKind.Local).AddTicks(4350),
+                            LastLoginDate = new DateTime(2023, 4, 18, 15, 35, 18, 537, DateTimeKind.Local).AddTicks(8058),
                             LastName = "Mustapha",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEBhuEXuRzqdaefcJw054qk3yxRJ2OAMxEjObGD1pZ4o7gsLFLN8tnUuBthTELhvBeQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOuWOSPP12BI9NVjwAVBpTJ78IzCJdPivpx7A7lpKi3XU0Q2gjKxQBkHSCrSg669Nw==",
                             PhoneNumber = "08055423378",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false

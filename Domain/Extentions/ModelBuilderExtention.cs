@@ -15,17 +15,6 @@ namespace Domain.Extentions
 
         public static void Seed(this ModelBuilder builder)
         {
-            builder.Entity<AppUsers>().HasData(
-               new AppUsers
-               {
-                   Id = Guid.NewGuid(),
-                   FirstName = "Aysat",
-                   MiddleName = "Abiodun",
-                   LastName = "Mustapha",
-                   PhoneNumber = "08084491078",
-                   Email = "abiodunayisat2@gmail.com",
-                   PasswordHash = Hasher.HashPassword(null,"Lilshazy@1")
-               });
 
             builder.Entity<AppUsers>().HasData(
             new AppUsers

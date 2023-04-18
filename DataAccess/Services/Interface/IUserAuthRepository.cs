@@ -1,5 +1,6 @@
 ﻿using Domain.ViewModel;
 using Domain.ViewModel.RegisterViewModel;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace DataAccess.Services.Interface
         Task<ResponseViewModel> ResetPassword(ResetPasswordViewModel model);
         Task<ResponseViewModel> ChangePassword(ChangePasswordViewModel model);
         Task<ResponseViewModel> DeleteProfile(Guid Id);
-
+       // Task<ResponseViewModel> ConfirmEmail(string token, string email);
 
 
 

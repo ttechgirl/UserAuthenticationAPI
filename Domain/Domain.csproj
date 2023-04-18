@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -19,7 +19,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
     <PackageReference Include="sendgrid" Version="9.28.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validation\" />
   </ItemGroup>
 
 </Project>

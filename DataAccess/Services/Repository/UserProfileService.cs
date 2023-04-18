@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Enums
+namespace DataAccess.Services.Repository
 {
-    public enum Gender
+    public class UserProfileService
     {
-        UNKNOWN,
-        MALE,
-        FEMALE
     }
 }

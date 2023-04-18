@@ -11,12 +11,13 @@ namespace Domain.ViewModel.RegisterViewModel
     {
         public Guid RoleId { get; set; }
 
-        [Required(ErrorMessage = "Lastname is required")]
+        [Required(ErrorMessage = "Last name is required"), Display(Name = "Last Name")]
         public string? LastName { get; set; }
 
-        [Required(ErrorMessage = "Firstname is required")]
+        [Required(ErrorMessage = "First name is required"), Display(Name = "First Name")]
         public string? FirstName { get; set; }
 
+        [ Display(Name = "Middle Name")]
         public string? MiddleName { get; set; }
 
         //[Required(ErrorMessage = "Username is required")]
@@ -25,11 +26,11 @@ namespace Domain.ViewModel.RegisterViewModel
         [Required(ErrorMessage = "Email is required"), DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
-        [Required, DataType(DataType.PhoneNumber)]
+        [Required, DataType(DataType.PhoneNumber), Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
 
         [Required, DataType(DataType.Password)]
-        [StringLength(15, ErrorMessage = "password must be at least 8 characters")]
+        [StringLength(50, ErrorMessage = "Password must be at least 8 characters")]
         public string? Password { get; set; }
 
         [DataType(DataType.Password), Display(Name = "Confirm password")]

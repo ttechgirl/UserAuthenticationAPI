@@ -13,11 +13,11 @@ namespace Domain.ViewModel.RegisterViewModel
         public string? Email { get; set; }
 
         [Required, DataType(DataType.Password), Display(Name = "Current Password")]
-        [StringLength(15, ErrorMessage = "Current password incorrect")]
+        [StringLength(50, ErrorMessage = "Current password incorrect")]
         public string? CurrentPassword { get; set; }
 
         [Required,DataType(DataType.Password) ,Display(Name ="New Password")]
-        [StringLength(15, ErrorMessage = "Current password incorrect")]
+        [StringLength(50, ErrorMessage = "Current password incorrect")]
         public string? NewPassword { get; set; }
 
         [Required, DataType(DataType.Password), Display(Name = "Confirm Password")]

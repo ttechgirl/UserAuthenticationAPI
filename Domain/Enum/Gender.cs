@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Services.Interface
+namespace Domain.Enum
 {
-    public interface IEmailSender
+    public enum Gender
     {
+        UNKNOWN,
+        MALE,
+        FEMALE
     }
 }

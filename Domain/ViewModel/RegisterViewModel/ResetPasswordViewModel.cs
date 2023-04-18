@@ -13,7 +13,7 @@ namespace Domain.ViewModel.RegisterViewModel
         public string? Email { get; set; }
 
         [Required, DataType(DataType.Password)]
-        [StringLength(15, ErrorMessage = "password must be at least 8 characters")]
+        [StringLength(50, ErrorMessage = "Password must be at least 8 characters")]
         public string? Password { get; set; }
 
         [DataType(DataType.Password), Display(Name = "Confirm Password")]

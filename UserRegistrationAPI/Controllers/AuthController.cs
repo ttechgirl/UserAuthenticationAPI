@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -21,13 +22,16 @@ namespace UserRegistrationAPI.Controllers
         public RoleManager<AppRoles> roleManager;
         public readonly IConfiguration configuration;
         private readonly IUserAuthRepository userRepository;
+        public readonly IEmailService emailService;
 
-        public AuthController(IUserAuthRepository userRepository,IConfiguration configuration,RoleManager<AppRoles> roleManager, UserManager<AppUsers> userManager)
+
+        public AuthController(IUserAuthRepository userRepository,IConfiguration configuration,RoleManager<AppRoles> roleManager, UserManager<AppUsers> userManager, IEmailService emailService)
         {
             this.userRepository = userRepository;
             this.configuration = configuration;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.emailService = emailService;
         }
 
         [HttpPost]
@@ -36,40 +40,46 @@ namespace UserRegistrationAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userRepository.SignUp(model);
-                if (user.Success)
+                var user = new AppUsers()
                 {
-                    var role = await roleManager.FindByIdAsync(model.RoleId.ToString());
-                    if (role == null)
-                    {
-                        return StatusCode(StatusCodes.Status400BadRequest, new ResponseViewModel { Success = false, Message = "Role does not exist" });
+                    UserName = model.Email,
+                    LastName = model.LastName,
+                    FirstName = model.FirstName,
+                    MiddleName = model.MiddleName,
+                    Email = model.Email,
+                    EmailConfirmed = false,
+                    PhoneNumber = model.PhoneNumber,
+                    CreatedOn = DateTime.Now,
+                    SecurityStamp = DateTime.Now.ToString()
+                };
 
-                    }
-                    return Ok(user);
+                var userService = await userRepository.SignUp(model);
+                if (userService !=null)
+                {
+                    //Add token to verify email
+                    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Auth", new { token, email = user.Email }, Request.Scheme);
+                    var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink);
+                    emailService.SendEmail(message);
+                    return Ok(userService);
                 }
-                return BadRequest("Kindly input all fields correctly");
+                return BadRequest(userService);
             }
             return BadRequest();
            
-
             //if (string.Compare(model.Password, model.ConfirmPassword) != 0)
             //{
             //    return StatusCode(StatusCodes.Status400BadRequest, new ResponseViewModel { Success=false,Message= "Password mismatched!"});
             //}
         }
 
-
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody]LoginViewModel model)
         {
-
-            //var user = await userManager.FindByNameAsync(model.Email);
-            var user = await userRepository.Login(model);
-            if (user.Success)
+            var userService = await userRepository.Login(model);
+            if (userService.Success)
             {
-                //var userRoles = await userManager.GetRolesAsync(user);
-
                 var authClaims = new List<Claim> { };
                
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
@@ -86,47 +96,62 @@ namespace UserRegistrationAPI.Controllers
                     expiration = token.ValidTo,
                 });
             }
-            return Unauthorized(user);
+            return Unauthorized(userService);
         }
 
-        
         [HttpPost]
         [Route("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordViewModel model)
         {
-            var user = await userRepository.ResetPassword(model);
+            var userService = await userRepository.ResetPassword(model);
 
-            if (user.Success)
+            if (userService.Success)
             {
-                return Ok(user);
+                return Ok(userService);
             }
-            return NotFound(user);
+            return NotFound(userService);
         }
 
         [HttpPost]
-        [Route("forget-password")]
+        [Route("forget-password")] //email confirmation to be integrated
         public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordViewModel model)
         {
-            var user = await userRepository.ForgetPassword(model);
-            if(user.Success)
+            var user = new AppUsers()
             {
-                return Ok(user);
+                UserName = model.Email,
+                LastName = model.LastName,
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
+                Email = model.Email,
+                EmailConfirmed = false,
+                PhoneNumber = model.PhoneNumber,
+                CreatedOn = DateTime.Now,
+                SecurityStamp = DateTime.Now.ToString()
+            };
+
+            var userService = await userRepository.ForgetPassword(model);
+            if(userService.Success)
+            {
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Auth", new { token, email = user.Email }, Request.Scheme);
+                var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink);
+                emailService.SendEmail(message);
+                return Ok(userService);
             }
-            return NotFound(user);
+            return NotFound(userService);
 
         }
-
 
         [HttpPost]
         [Route("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
         {
-            var user = await userRepository.ChangePassword(model);
-            if (user.Success)
+            var userService = await userRepository.ChangePassword(model);
+            if (userService.Success)
             {
-                return Ok(user);
+                return Ok(userService);
             }
-            return NotFound(user);
+            return NotFound(userService);
 
         }
 
@@ -138,16 +163,31 @@ namespace UserRegistrationAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status400BadRequest, new ResponseViewModel { Success = false, Message = "Id cannot be empty!" });
             }
-            var user = await userRepository.DeleteProfile(Id);
-            if(user.Success )
+            var userService = await userRepository.DeleteProfile(Id);
+            if(userService.Success )
             {
-                return Ok(user);
+                return Ok(userService);
             }
-            return BadRequest(user);
+            return BadRequest(userService);
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                var result = await userManager.ConfirmEmailAsync(user, token);
+                if (result.Succeeded)
+                {
+                  return StatusCode(StatusCodes.Status200OK, new ResponseViewModel { Success = true, Message = "Email verification sent" });
 
+                }
+            }
+            return StatusCode(StatusCodes.Status400BadRequest, new ResponseViewModel { Success = false, Message = "Enter a valid email address" });
+
+        }
 
     }
 }
