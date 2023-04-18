@@ -40,16 +40,29 @@ namespace DataAccess.Services.Repository
 
         private void Send(MimeMessage message) 
         {
-            //connecting to the smtp server
             var client = new SmtpClient();
-            client.Connect(emailConfig.SmtpServer, emailConfig.Port, true);
-            //removes authentication supported bt smtpserver
-            client.AuthenticationMechanisms.Remove("");
-            //adds authentication through the username and password provided in the appsettings
-            client.Authenticate(emailConfig.UserName, emailConfig.Password);
-            client.Send(message);
-            client.Disconnect(true);
-            client.Dispose();
+
+            try
+            {
+                //connecting to the smtp server
+                client.Connect(emailConfig.SmtpServer, emailConfig.Port, true);
+                //removes authentication supported bt smtpserver
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                //adds authentication through the username and password provided in the appsettings
+                client.Authenticate(emailConfig.UserName, emailConfig.Password);
+                client.Send(message);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                client.Disconnect(true);
+                client.Dispose();
+            }
+          
+            
         }
     }
 

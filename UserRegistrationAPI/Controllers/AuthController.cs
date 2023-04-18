@@ -119,12 +119,8 @@ namespace UserRegistrationAPI.Controllers
             var user = new AppUsers()
             {
                 UserName = model.Email,
-                LastName = model.LastName,
-                FirstName = model.FirstName,
-                MiddleName = model.MiddleName,
                 Email = model.Email,
                 EmailConfirmed = false,
-                PhoneNumber = model.PhoneNumber,
                 CreatedOn = DateTime.Now,
                 SecurityStamp = DateTime.Now.ToString()
             };

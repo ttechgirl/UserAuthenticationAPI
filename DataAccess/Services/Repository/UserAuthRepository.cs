@@ -89,7 +89,13 @@ namespace DataAccess.Services.Repository
             //checking if user email exit and password matches the provided email
 
             var user = await userManager.FindByNameAsync(model.Email);
-            if(user != null&& !user.IsDeleted && await userManager.CheckPasswordAsync(user, model.Password))
+            if (!user.EmailConfirmed)
+            {
+                return new ResponseViewModel { Success = false, Message = $"{user.Email} is yet to be confirmed" };
+
+            }
+
+            if (user != null&& !user.IsDeleted &&await userManager.CheckPasswordAsync(user, model.Password))
             {
                 var userRoles =await userManager.GetRolesAsync(user);
                 var authClaims = new List<Claim>
